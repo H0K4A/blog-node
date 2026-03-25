@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= article.titre %></title>
+</head>
+<body>
+
+<a href="/">← Retour à l'accueil</a>
+
+<h1><%= article.titre %></h1>
+<p>
+  <strong>Auteur :</strong> <%= article.auteur %> |
+  <strong>Catégorie :</strong> <%= article.categorie %>
+</p>
+<p>
+  Publié le <%= new Date(article.created_at).toLocaleDateString() %>
+</p>
+
+<hr>
+
+<p><%= article.contenu %></p>
+
+<hr>
+
+<h3>Tags :</h3>
+<% tags.forEach(tag => { %>
+  <span style="border:1px solid #ccc; padding:2px 5px; margin-right:5px;"><%= tag.nom %></span>
+<% }) %>
+
+<hr>
+
+<h3>Commentaires :</h3>
+<% if (comments.length === 0) { %>
+  <p>Aucun commentaire pour cet article.</p>
+<% } else { %>
+  <% comments.forEach(c => { %>
+    <div style="border:1px solid #eee; padding:5px; margin-bottom:5px;">
+      <strong><%= c.auteur_nom %> :</strong> <%= c.contenu %>
+      <br>
+      <small><%= new Date(c.created_at).toLocaleDateString() %></small>
+    </div>
+  <% }) %>
+<% } %>
+
+</body>
+</html>
