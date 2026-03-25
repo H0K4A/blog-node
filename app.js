@@ -72,6 +72,46 @@ app.get('/article/:id', (req, res) => {
   });
 });
 
+app.get('/new', (req, res) => {
+  // Récupérer auteurs, catégories et tags pour le formulaire
+  db.query('SELECT * FROM auteurs', (err, auteurs) => {
+    db.query('SELECT * FROM categories', (err, categories) => {
+      db.query('SELECT * FROM tags', (err, tags) => {
+        res.render('new-article', { auteurs, categories, tags });
+      });
+    });
+  });
+});
+
+app.post('/new', (req, res) => {
+  const { titre, contenu, auteur_id, categorie_id, tags } = req.body;
+
+  const sql = `
+    INSERT INTO articles (titre, contenu, auteur_id, categorie_id)
+    VALUES (?, ?, ?, ?)
+  `;
+
+  db.query(sql, [titre, contenu, auteur_id, categorie_id], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.send('Erreur serveur');
+    }
+
+    const articleId = result.insertId;
+
+    // Insertion des tags sélectionnés
+    if (tags) {
+      const tagsArray = Array.isArray(tags) ? tags : [tags];
+
+      tagsArray.forEach(tagId => {
+        db.query('INSERT INTO article_tag (article_id, tag_id) VALUES (?, ?)', [articleId, tagId]);
+      });
+    }
+
+    res.redirect('/');
+  });
+});
+
 app.listen(3000, () => {
   console.log('Serveur lancé sur http://localhost:3000');
 });

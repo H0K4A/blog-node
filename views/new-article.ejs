@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Nouvel article</title>
+</head>
+<body>
+
+<h1>Créer un nouvel article</h1>
+
+<form action="/new" method="post">
+
+  <p>
+    <label>Titre :</label><br>
+    <input type="text" name="titre" required>
+  </p>
+
+  <p>
+    <label>Auteur :</label><br>
+    <select name="auteur_id" required>
+      <% auteurs.forEach(a => { %>
+        <option value="<%= a.id %>"><%= a.nom %></option>
+      <% }) %>
+    </select>
+  </p>
+
+  <p>
+    <label>Catégorie :</label><br>
+    <select name="categorie_id" required>
+      <% categories.forEach(c => { %>
+        <option value="<%= c.id %>"><%= c.nom %></option>
+      <% }) %>
+    </select>
+  </p>
+
+  <p>
+    <label>Tags :</label><br>
+      <% tags.forEach(t => { %>
+        <input type="checkbox" name="tags" value="<%= t.id %>"> <%= t.nom %><br>
+      <% }) %>
+  </p>
+
+  <p>
+    <label>Contenu :</label><br>
+    <textarea name="contenu" rows="5" required></textarea>
+  </p>
+
+  <button type="submit">Créer l'article</button>
+</form>
+
+<a href="/">← Retour à l'accueil</a>
+
+</body>
+</html>
