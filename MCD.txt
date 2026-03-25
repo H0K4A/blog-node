@@ -1,0 +1,24 @@
+MCD :
+
+Auteur (1) ─── (N) Article
+Article (N) ─── (1) Catégorie
+Article (1) ─── (N) Commentaire
+Article (N) ─── (N) Tag
+
+
+
+
+
+MLD : 
+
+auteurs (id, nom)
+
+categories (id, nom)
+
+articles (id, titre, contenu, created_at, auteur_id, categorie_id)
+
+commentaires (id, auteur_nom, contenu, created_at, article_id)
+
+tags (id, nom)
+
+article_tag (article_id, tag_id)
